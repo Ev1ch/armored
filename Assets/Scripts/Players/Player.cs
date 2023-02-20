@@ -1,10 +1,12 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+using Players.Abstracts;
+
 namespace Players
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IFullyMovable
     {
         [Header("Horizontal Movement")]
         [SerializeField] private float _horizontalSpeed;

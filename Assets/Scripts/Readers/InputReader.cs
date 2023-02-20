@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 
+using Players.Abstracts;
 using Players;
 
 namespace Readers
 {
     public class InputReader : MonoBehaviour
     {
+        // TODO: Make something like: [SerializeField] private IFullyMovable _player;
         [SerializeField] private Player _player;
 
         private float _horizontalDirection;
