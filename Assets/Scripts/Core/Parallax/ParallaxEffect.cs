@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Paralax
+namespace Core.Parallax
 {
-    public class ParalaxEffect : MonoBehaviour
+    public class ParallaxEffect : MonoBehaviour
     {
         [SerializeField] private List<ParalaxLayer> _layers;
         [SerializeField] private Transform _target;

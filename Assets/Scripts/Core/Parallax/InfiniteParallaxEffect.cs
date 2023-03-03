@@ -2,14 +2,14 @@
 using System;
 using UnityEngine;
 
-namespace Core.Paralax
+namespace Core.Parallax
 {
-    public class InfiniteParalaxEffect : MonoBehaviour
+    public class InfiniteParallaxEffect : MonoBehaviour
     {
-        [SerializeField] private List<ParalaxPart> _parts;
+        [SerializeField] private List<ParallaxPart> _parts;
         [SerializeField] private Transform _target;
 
-        private List<InfiniteParalaxLayer> _layers;
+        private List<InfiniteParallaxLayer> _layers;
         private float _previousTargetPosition;
 
         private void Start()
@@ -22,7 +22,7 @@ namespace Core.Paralax
                 Transform layerParent = new GameObject().transform;
                 layerParent.transform.parent = transform;
                 part.SpriteRenderer.transform.parent = layerParent;
-                InfiniteParalaxLayer infiniteParalaxLayer = new(part.SpriteRenderer, part.Speed, layerParent);
+                InfiniteParallaxLayer infiniteParalaxLayer = new(part.SpriteRenderer, part.Speed, layerParent);
                 _layers.Add(infiniteParalaxLayer);
             }
         }
@@ -38,17 +38,19 @@ namespace Core.Paralax
         }
 
         [Serializable]
-        private class ParalaxPart
+        private class ParallaxPart
         {
             [field: SerializeField]
             public SpriteRenderer SpriteRenderer
             {
-                get; private set;
+                get; 
+                private set;
             }
             [field: SerializeField]
             public float Speed
             {
-                get; private set;
+                get; 
+                private set;
             }
         }
     }

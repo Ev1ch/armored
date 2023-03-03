@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Paralax
+namespace Core.Parallax
 {
-    public class InfiniteParalaxLayer
+    public class InfiniteParallaxLayer
     {
         private readonly float _speed;
         private readonly List<Transform> _layers;
         private readonly float _layerHorizontalSize;
 
-        public InfiniteParalaxLayer(SpriteRenderer initialPart, float speed, Transform parentTransform)
+        public InfiniteParallaxLayer(SpriteRenderer initialPart, float speed, Transform parentTransform)
         {
             _speed = speed;
 
