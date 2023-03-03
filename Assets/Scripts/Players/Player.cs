@@ -2,6 +2,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 using Players.Abstracts;
+using Core.Tools;
+using Core.Enums;
 
 namespace Players
 {
@@ -10,7 +12,7 @@ namespace Players
     {
         [Header("Horizontal Movement")]
         [SerializeField] private float _horizontalSpeed;
-        [SerializeField] private bool _faceRight;
+        [SerializeField] private Direction _direction;
 
         [Header("Vertical Movement")]
         [SerializeField] private float _verticalSpeed;
@@ -25,6 +27,8 @@ namespace Players
         [SerializeField] private SpriteRenderer _shadow;
         [SerializeField] [Range(0, 1)] private float _shadowSizeModificator;
         [SerializeField] [Range(0, 1)] private float _shadowAlphaModificator;
+
+        [SerializeField] private DirectionalCameraPair _cameras;
 
         private Rigidbody2D _rigidbody;
         private float _sizeModificator;
@@ -109,7 +113,7 @@ namespace Players
 
         private void SetDirection(float direction)
         {
-            if (_faceRight && direction < 0 || !_faceRight && direction > 0)
+            if (_direction == Direction.Right && direction < 0 || _direction == Direction.Left && direction > 0)
             {
                 Flip();
             }
@@ -118,7 +122,12 @@ namespace Players
         private void Flip()
         {
             transform.Rotate(0, 180, 0);
-            _faceRight = !_faceRight;
+            _direction = _direction == Direction.Right ? Direction.Left : Direction.Right;
+        
+            foreach (var cameraPair in _cameras.DirectionCameras)
+            {
+                cameraPair.Value.enabled = cameraPair.Key == _direction;
+            }
         }
 
         private void UpdateJump()
