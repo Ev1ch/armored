@@ -10,6 +10,8 @@ namespace Players
     [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour, IFullyMovable
     {
+        [SerializeField] private Animator _animator;
+
         [Header("Horizontal Movement")]
         [SerializeField] private float _horizontalSpeed;
         [SerializeField] private Direction _direction;
@@ -25,8 +27,8 @@ namespace Players
         [SerializeField] private float _jumpForce;
         [SerializeField] private float _gravityScale;
         [SerializeField] private SpriteRenderer _shadow;
-        [SerializeField] [Range(0, 1)] private float _shadowSizeModificator;
-        [SerializeField] [Range(0, 1)] private float _shadowAlphaModificator;
+        [SerializeField][Range(0, 1)] private float _shadowSizeModificator;
+        [SerializeField][Range(0, 1)] private float _shadowAlphaModificator;
 
         [SerializeField] private DirectionalCameraPair _cameras;
 
@@ -38,6 +40,9 @@ namespace Players
         private float _shadowVerticalPosition;
         private Vector2 _shadowLocalScale;
         private Color _shadowColor;
+
+        private Vector2 _movement;
+        private AnimationType _currentAnimationType;
 
         private void Start()
         {
@@ -58,10 +63,20 @@ namespace Players
             {
                 UpdateJump();
             }
+
+            UpdateAnimations();
+        }
+
+        private void UpdateAnimations()
+        {
+            PlayAnimation(AnimationType.Idle, true);
+            PlayAnimation(AnimationType.Run, _movement.magnitude > 0);
+            PlayAnimation(AnimationType.Jump, _isJumping);
         }
 
         public void MoveHorizontally(float direction)
         {
+            _movement.x = direction;
             SetDirection(direction);
             var velocity = _rigidbody.velocity;
             velocity.x = direction * _horizontalSpeed;
@@ -75,6 +90,7 @@ namespace Players
                 return;
             }
 
+            _movement.y = direction;
             var velocity = _rigidbody.velocity;
             velocity.y = direction * _verticalSpeed;
             _rigidbody.velocity = velocity;
@@ -123,7 +139,7 @@ namespace Players
         {
             transform.Rotate(0, 180, 0);
             _direction = _direction == Direction.Right ? Direction.Left : Direction.Right;
-        
+
             foreach (var cameraPair in _cameras.DirectionCameras)
             {
                 cameraPair.Value.enabled = cameraPair.Key == _direction;
@@ -152,6 +168,34 @@ namespace Players
             _shadow.color = _shadowColor;
             _rigidbody.position = new Vector2(_rigidbody.position.x, _startJumpVerticalPostion);
             _rigidbody.gravityScale = 0;
+        }
+
+        private void PlayAnimation(AnimationType animationType, bool isActive)
+        {
+            if (!isActive)
+            {
+                if(_currentAnimationType == AnimationType.Idle || _currentAnimationType != animationType)
+                {
+                    return;
+                }
+
+                _currentAnimationType = AnimationType.Idle;
+                PlayAnimation(_currentAnimationType);
+                return;
+            }
+
+            if (_currentAnimationType >= animationType)
+            {
+                return;
+            }
+
+            _currentAnimationType = animationType;
+            PlayAnimation(_currentAnimationType);
+        }
+
+        private void PlayAnimation(AnimationType animationType)
+        {
+            _animator.SetInteger(nameof(AnimationType), (int)animationType);
         }
     }
 }
