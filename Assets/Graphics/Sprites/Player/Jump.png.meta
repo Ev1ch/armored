@@ -150,12 +150,12 @@ TextureImporter:
       name: Jump_0
       rect:
         serializedVersion: 2
-        x: 76
-        y: 78
-        width: 38
-        height: 53
+        x: 0
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -171,12 +171,12 @@ TextureImporter:
       name: Jump_1
       rect:
         serializedVersion: 2
-        x: 276
-        y: 78
-        width: 38
-        height: 53
+        x: 200
+        y: 0
+        width: 200
+        height: 200
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -200,6 +200,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       Jump_1: 7034338576483803127
+      Jump_2: -1310051621
       Jump_0: 7460046300004610927
   spritePackingTag: 
   pSDRemoveMatte: 0
