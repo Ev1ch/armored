@@ -22,6 +22,11 @@ namespace Readers
             {
                 _player.Jump();
             }
+
+            if (Input.GetButtonDown(Button.Fire1))
+            {
+                _player.StartAttack();
+            }
         }
 
         private void FixedUpdate()

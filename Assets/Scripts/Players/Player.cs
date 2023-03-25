@@ -4,13 +4,15 @@ using UnityEngine;
 using Players.Abstracts;
 using Core.Tools;
 using Core.Enums;
+using Players.Animation;
+using System;
 
 namespace Players
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Player : MonoBehaviour, IFullyMovable
     {
-        [SerializeField] private Animator _animator;
+        [SerializeField] private AnimationController _animator;
 
         [Header("Horizontal Movement")]
         [SerializeField] private float _horizontalSpeed;
@@ -42,7 +44,6 @@ namespace Players
         private Color _shadowColor;
 
         private Vector2 _movement;
-        private AnimationType _currentAnimationType;
 
         private void Start()
         {
@@ -56,7 +57,6 @@ namespace Players
             UpdateSize();
         }
 
-
         private void Update()
         {
             if (_isJumping)
@@ -69,9 +69,14 @@ namespace Players
 
         private void UpdateAnimations()
         {
-            PlayAnimation(AnimationType.Idle, true);
-            PlayAnimation(AnimationType.Run, _movement.magnitude > 0);
-            PlayAnimation(AnimationType.Jump, _isJumping);
+            if (!_animator)
+            {
+                return;
+            }
+
+            _animator.PlayAnimation(AnimationType.Idle, true);
+            _animator.PlayAnimation(AnimationType.Run, _movement.magnitude > 0);
+            _animator.PlayAnimation(AnimationType.Jump, _isJumping);
         }
 
         public void MoveHorizontally(float direction)
@@ -118,6 +123,29 @@ namespace Players
             _rigidbody.gravityScale = _gravityScale * jumpModificator;
             _startJumpVerticalPostion = transform.position.y;
             _shadowVerticalPosition = _shadow.transform.position.y;
+        }
+
+        public void StartAttack()
+        {
+            if (!_animator.PlayAnimation(AnimationType.Attack, true))
+            {
+                return;
+            }
+
+            _animator.ActionRequested += Attack;
+            _animator.AnimationEnded += EndAttack;
+        }
+
+        private void Attack()
+        {
+            Debug.Log("Attack");
+        }
+
+        private void EndAttack()
+        {
+            _animator.ActionRequested -= Attack;
+            _animator.AnimationEnded -= EndAttack;
+            _animator.PlayAnimation(AnimationType.Attack, false);
         }
 
         private void UpdateSize()
@@ -168,34 +196,6 @@ namespace Players
             _shadow.color = _shadowColor;
             _rigidbody.position = new Vector2(_rigidbody.position.x, _startJumpVerticalPostion);
             _rigidbody.gravityScale = 0;
-        }
-
-        private void PlayAnimation(AnimationType animationType, bool isActive)
-        {
-            if (!isActive)
-            {
-                if(_currentAnimationType == AnimationType.Idle || _currentAnimationType != animationType)
-                {
-                    return;
-                }
-
-                _currentAnimationType = AnimationType.Idle;
-                PlayAnimation(_currentAnimationType);
-                return;
-            }
-
-            if (_currentAnimationType >= animationType)
-            {
-                return;
-            }
-
-            _currentAnimationType = animationType;
-            PlayAnimation(_currentAnimationType);
-        }
-
-        private void PlayAnimation(AnimationType animationType)
-        {
-            _animator.SetInteger(nameof(AnimationType), (int)animationType);
         }
     }
 }
