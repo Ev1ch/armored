@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 using Players.Abstracts;
@@ -184,7 +183,8 @@ namespace Players
 
             _shadow.transform.position = new Vector2(_shadow.transform.position.x, _shadowVerticalPosition);
             var distance = transform.position.y - _startJumpVerticalPostion;
-            _shadow.color = _shadowColor.WithAlpha(_shadowColor.a - distance * _shadowAlphaModificator);
+            var updatedShadowColor = new Color(_shadowColor.r, _shadowColor.g, _shadowColor.b, _shadowColor.a - distance * _shadowAlphaModificator);
+            _shadow.color = updatedShadowColor;
             _shadow.transform.localScale = _shadowLocalScale * (1 + _shadowSizeModificator * distance);
         }
 
