@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-using Players.Abstracts;
 using Core.Tools;
 using Core.Animation;
 using Core.Movement.Data;
@@ -10,7 +9,7 @@ using Core.Movement.Controllers;
 namespace Players
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Player : MonoBehaviour, IFullyMovable
+    public class Player : MonoBehaviour
     {
         [SerializeField] private AnimationController _animator;
         
