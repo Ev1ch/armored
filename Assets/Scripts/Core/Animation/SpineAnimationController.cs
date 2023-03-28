@@ -2,7 +2,7 @@
 using Spine.Unity;
 using Spine;
 
-namespace Players.Animation
+namespace Core.Animation
 {
     [RequireComponent(typeof(SkeletonAnimation))]
     public class SpineAnimationController : AnimationController

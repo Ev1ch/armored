@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Players.Animation
+namespace Core.Animation
 {
     public abstract class AnimationController : MonoBehaviour
     {
