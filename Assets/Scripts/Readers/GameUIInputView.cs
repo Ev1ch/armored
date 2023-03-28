@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Players
+namespace Readers
 {
     internal class GameUIInputView : MonoBehaviour, IEntityInputSource
     {
