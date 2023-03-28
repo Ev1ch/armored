@@ -1,6 +1,6 @@
 ﻿namespace Readers
 {
-    internal static class  ControlButton
+    internal static class ControlButton
     {
         public static readonly string Jump = "Jump";
 
