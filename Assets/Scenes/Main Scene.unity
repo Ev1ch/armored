@@ -1408,7 +1408,9 @@ MonoBehaviour:
     <JumpForce>k__BackingField: 500
     <GravityScale>k__BackingField: 5
     <Shadow>k__BackingField: {fileID: 2136733577}
-    <Ground>k__BackingField: {fileID: 0}
+    <GroundMask>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 8
     <ShadowSizeModificator>k__BackingField: 0.2
     <ShadowAlphaModificator>k__BackingField: 0.5
   _cameras:
