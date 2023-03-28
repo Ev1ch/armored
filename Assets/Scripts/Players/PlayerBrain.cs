@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Core.Services.Updaters;
 using Players.Abstracts;
 
 namespace Players
 {
-    public class PlayerBrain
+    public class PlayerBrain : IDisposable
     {
         private readonly Player _player;
         private readonly List<IEntityInputSource> _inputSources;
@@ -13,9 +15,12 @@ namespace Players
         {
             _player = player;
             _inputSources = inputSources;
+            ProjectUpdater.Instance.FixedUpdatedCalled += OnFixedUpdate;
         }
 
-        public void OnFixedUpdate()
+        public void Dispose() => ProjectUpdater.Instance.FixedUpdatedCalled -= OnFixedUpdate;
+
+        private void OnFixedUpdate()
         {
             _player.MoveHorizontally(GetHorizontalDirection());
             _player.MoveVertically(GetVerticalDirection());
