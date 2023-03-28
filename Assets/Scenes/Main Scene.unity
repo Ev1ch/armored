@@ -993,7 +993,7 @@ GameObject:
   - component: {fileID: 667604033}
   - component: {fileID: 667604034}
   - component: {fileID: 667604035}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1396,18 +1396,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1191683507}
-  _horizontalSpeed: 3
-  _direction: 0
-  _verticalSpeed: 2
-  _maximumSize: 4.5
-  _maximumVerticalPosition: -2.05
-  _minimumSize: 4
-  _minimumVerticalPosition: -2.57
-  _jumpForce: 500
-  _gravityScale: 5
-  _shadow: {fileID: 2136733577}
-  _shadowSizeModificator: 0.2
-  _shadowAlphaModificator: 0.5
+  _directionalMovementData:
+    <HorizontalSpeed>k__BackingField: 3
+    <Direction>k__BackingField: 0
+    <VerticalSpeed>k__BackingField: 2
+    <MaximumSize>k__BackingField: 4.5
+    <MaximumVerticalPosition>k__BackingField: -2.05
+    <MinimumSize>k__BackingField: 4
+    <MinimumVerticalPosition>k__BackingField: -2.57
+  _jumpData:
+    <JumpForce>k__BackingField: 500
+    <GravityScale>k__BackingField: 5
+    <Shadow>k__BackingField: {fileID: 2136733577}
+    <Ground>k__BackingField: {fileID: 0}
+    <ShadowSizeModificator>k__BackingField: 0.2
+    <ShadowAlphaModificator>k__BackingField: 0.5
   _cameras:
     _rightCamera: {fileID: 1228754005}
     _leftCamera: {fileID: 188282075}
@@ -2391,7 +2394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -480.48584, y: 298.6672}
+  m_AnchoredPosition: {x: -480.48633, y: 298.667}
   m_SizeDelta: {x: 957.2861, y: 596.5674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2132101144
