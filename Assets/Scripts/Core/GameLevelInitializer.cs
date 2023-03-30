@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using Core.Services.Updaters;
+using UnityEngine;
+
+using Players;
+using Readers;
+using Players.Abstracts;
+
+namespace Core
+{
+    public class GameLevelInitializer : MonoBehaviour
+    {
+        [SerializeField] private Player _player;
+        [SerializeField] private GameUIInputView _gameUIInputView;
+
+        private ExternalDevicesInputReader _externalDevicesInputReader;
+        private PlayerSystem _playerSystem;
+        private ProjectUpdater _projectUpdater;
+
+        private List<IDisposable> _disposables;
+
+        private bool _onPause;
+
+        private void Awake()
+        {
+            _disposables = new List<IDisposable>();
+
+            if (ProjectUpdater.Instance == null)
+            {
+                _projectUpdater = new GameObject().AddComponent<ProjectUpdater>();
+            }
+            else
+            {
+                _projectUpdater = ProjectUpdater.Instance as ProjectUpdater;
+            }
+
+            _externalDevicesInputReader = new ExternalDevicesInputReader();
+            _disposables.Add(_externalDevicesInputReader);
+
+            _playerSystem = new PlayerSystem(_player, new List<IEntityInputSource>()
+            {
+                _gameUIInputView,
+                _externalDevicesInputReader
+            });
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _projectUpdater.IsPaused = !_projectUpdater.IsPaused;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var disposable in _disposables)
+            {
+                disposable.Dispose();
+            }
+        }
+    }
+}
